@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/2dam3.HZ114485/AndroidStudioProjects/UniversityApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/2dam3.HZ114485/AndroidStudioProjects/UniversityApp/app/src/main/res/layout/fragment_item.xml" value="0.15833333333333333" />
+        <entry key="..\:/Users/2dam3.HZ114485/AndroidStudioProjects/UniversityApp/app/src/main/res/layout/fragment_item_list.xml" value="0.25" />
+        <entry key="..\:/Users/2dam3.HZ114485/AndroidStudioProjects/UniversityApp/app/src/main/res/layout/fragment_universidades_list.xml" value="0.14649122807017545" />
       </map>
     </option>
   </component>

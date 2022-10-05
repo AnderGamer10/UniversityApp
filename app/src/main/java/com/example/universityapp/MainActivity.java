@@ -25,17 +25,23 @@ import java.net.IDN;
 import java.util.ArrayList;
 import java.util.Objects;
 
+class Universidad{
+    String nombre;
+    String domain;
+
+    public Universidad(String nombre, String domain) {
+        this.nombre = nombre;
+        this.domain = domain;
+    }
+}
 public class MainActivity extends AppCompatActivity {
 
-    interface Universidad{
-        String nombre = "";
-        String domain = "";
-    }
+
     Button btnMostrar;
     EditText idPais, idNombre;
-    TextView prueba;
     String strPais, strNombre;
-    ArrayList<String> datosUniversidades = new ArrayList<String>();
+    ArrayList<Universidad> datosUniversidades;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,20 +49,20 @@ public class MainActivity extends AppCompatActivity {
         btnMostrar = findViewById(R.id.btnMostrar);
         idNombre = findViewById(R.id.idNombre);
         idPais = findViewById(R.id.idPais);
-        prueba = findViewById(R.id.prueba);
 
         btnMostrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 strPais = String.valueOf(idPais.getText());
                 strNombre = String.valueOf(idNombre.getText());
+                datosUniversidades = new ArrayList<>();
                 LeerApi();
             }
         });
     }
     private void LeerApi() {
 
-        String url = "http://universities.hipolabs.com/search?country="+ strPais + "&name=" + strNombre;
+        String url = "http://universities.hipolabs.com/search?country=" + strPais + "&name=" + strNombre;
 
         StringRequest postResquest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -65,17 +71,16 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray jsonObject = new JSONArray(response);
                     for (int i = 0; i < jsonObject.length();i++){
                         JSONObject j = jsonObject.getJSONObject(i);
-                        Log.i("cositas", j.getString("name"));
-//                        datosUniversidades.add(new Universidad(j.getString("name"),j.getString("domains")));
-                        datosUniversidades.add(j.getString("name"));
+                        datosUniversidades.add(new Universidad(j.getString("name"), j.getString("domains").substring(2,j.getString("domains").length()-2)));
                     }
-                    for (String nombreUni: datosUniversidades){
-                        Log.i("cositas2", nombreUni);
-                    }
-//                    prueba.setText(jsonObject.getString("name"));
-//                    String title = jsonObject.getString("title");
-//                    text.setText(title);
-                    //text.setText(jsonObject.getString("body"));
+//                    TODO: Para pruebas de datos guardados  ------ Borrar en el futuro ------
+//                    for (Universidad nombreUni: datosUniversidades){
+//                        Log.i("cositas2", nombreUni.nombre + " " + nombreUni.domain);
+//                    }
+
+
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

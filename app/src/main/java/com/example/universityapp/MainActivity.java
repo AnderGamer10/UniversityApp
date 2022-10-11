@@ -25,18 +25,7 @@ import java.net.IDN;
 import java.util.ArrayList;
 import java.util.Objects;
 
-class Universidad{
-    String nombre;
-    String domain;
-
-    public Universidad(String nombre, String domain) {
-        this.nombre = nombre;
-        this.domain = domain;
-    }
-}
 public class MainActivity extends AppCompatActivity {
-
-
     Button btnMostrar;
     EditText idPais, idNombre;
     String strPais, strNombre;
@@ -78,9 +67,11 @@ public class MainActivity extends AppCompatActivity {
 //                        Log.i("cositas2", nombreUni.nombre + " " + nombreUni.domain);
 //                    }
 
-
-
-
+//                    TODO: Pasando datos "mal" ******************************************************* Hay que pasarlo al Recycler para utilizarlo en la lista
+//                    UniversidadFragment universidadFragment = new UniversidadFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("DataUniversidades", datosUniversidades);
+//                    universidadFragment.setArguments(bundle);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -94,5 +85,4 @@ public class MainActivity extends AppCompatActivity {
         });
         Volley.newRequestQueue(this).add(postResquest);
     }
-
 }

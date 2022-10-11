@@ -73,6 +73,7 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ScrollView
+        android:id="@+id/idLista"
         android:layout_width="340dp"
         android:layout_height="367dp"
         app:layout_constraintBottom_toBottomOf="parent"

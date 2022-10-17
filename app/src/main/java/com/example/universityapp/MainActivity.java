@@ -29,8 +29,8 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     Button btnMostrar;
     EditText idPais, idNombre;
-    String strPais, strNombre;
-    ArrayList<Universidad> datosUniversidades;
+    String strPais = "", strNombre = "";
+//    ArrayList<Universidad> datosUniversidades;
     ScrollView idLista;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,46 +48,56 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 strPais = String.valueOf(idPais.getText());
                 strNombre = String.valueOf(idNombre.getText());
-                datosUniversidades = new ArrayList<>();
-                LeerApi();
+                Log.i("MainActivitry-----", "ADsasdasd-*-*-*-*-*-*-*-*-*-*-**-");
+//                datosUniversidades = new ArrayList<>();
+//                LeerApi();
+                Bundle bundle = new Bundle();
+                bundle.putString("DataNombreUni", strNombre);
+                bundle.putString("DataPais", strPais);
+                UniversidadFragment universidadFragment = new UniversidadFragment();
+                universidadFragment.setArguments(bundle);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fragmentContainerView2,universidadFragment)
+                        .commit();
                 idLista.setVisibility(View.VISIBLE);
             }
         });
     }
-    private void LeerApi() {
-
-        String url = "http://universities.hipolabs.com/search?country=" + strPais + "&name=" + strNombre;
-
-        StringRequest postResquest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonObject = new JSONArray(response);
-                    for (int i = 0; i < jsonObject.length();i++){
-                        JSONObject j = jsonObject.getJSONObject(i);
-                        datosUniversidades.add(new Universidad(j.getString("name"), j.getString("domains").substring(2,j.getString("domains").length()-2)));
-                    }
-//                    TODO: Para pruebas de datos guardados  ------ Borrar en el futuro ------
+//    TODO: Hacer la llamada de la API en el fragmento
+//    private void LeerApi() {
+//        String url = "http://universities.hipolabs.com/search?country=" + strPais + "&name=" + strNombre;
+//
+//        StringRequest postResquest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    JSONArray jsonObject = new JSONArray(response);
+//                    for (int i = 0; i < jsonObject.length();i++){
+//                        JSONObject j = jsonObject.getJSONObject(i);
+//                        datosUniversidades.add(new Universidad(j.getString("name"), j.getString("domains").substring(2,j.getString("domains").length()-2)));
+//                    }
+////                    TODO: Para pruebas de datos guardados  ------ Borrar en el futuro ------
 //                    for (Universidad nombreUni: datosUniversidades){
 //                        Log.i("cositas2", nombreUni.nombre + " " + nombreUni.domain);
 //                    }
-
-//                    TODO: Pasando datos "mal" ******************************************************* Hay que pasarlo al Recycler para utilizarlo en la lista
-//                    UniversidadFragment universidadFragment = new UniversidadFragment();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("DataUniversidades", datosUniversidades);
-//                    universidadFragment.setArguments(bundle);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Error", error.getMessage());
-            }
-        });
-        Volley.newRequestQueue(this).add(postResquest);
-    }
+//
+////                    TODO: Pasando datos "mal" ******************************************************* Hay que pasarlo al Recycler para utilizarlo en la lista
+////                    UniversidadFragment universidadFragment = new UniversidadFragment();
+////                    Bundle bundle = new Bundle();
+////                    bundle.putSerializable("DataUniversidades", datosUniversidades);
+////                    universidadFragment.setArguments(bundle);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e("Error", error.getMessage());
+//            }
+//        });
+//        Volley.newRequestQueue(this).add(postResquest);
+//    }
 }

@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.universityapp.placeholder.PlaceholderContent;
 
@@ -24,10 +26,6 @@ public class UniversidadFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public UniversidadFragment() {
     }
 
@@ -36,7 +34,9 @@ public class UniversidadFragment extends Fragment {
     public static UniversidadFragment newInstance(int columnCount) {
         UniversidadFragment fragment = new UniversidadFragment();
         Bundle args = new Bundle();
+
         args.putInt(ARG_COLUMN_COUNT, columnCount);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,6 +53,21 @@ public class UniversidadFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i("Fragemtno-----", "ADsasdasd-*-*-*-*-*-*-*-*-*-*-**-");
+        try {
+            String strNombreUni = getArguments().getString("DataNombreUni");
+            String strPais = getArguments().getString("DataPais");
+            if (strNombreUni == null){
+                Log.i("prueba", " aca");
+            }else {
+                Log.i("prueba2", strNombreUni);
+            }
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+
+
         View view = inflater.inflate(R.layout.fragment_universidades_list, container, false);
 
         // Set the adapter

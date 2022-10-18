@@ -2,14 +2,15 @@ package com.example.universityapp;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.universityapp.placeholder.PlaceholderContent.PlaceholderItem;
 import com.example.universityapp.databinding.FragmentUniversidadBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,9 +19,9 @@ import java.util.List;
  */
 public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUniversidadRecyclerViewAdapter.ViewHolder> {
 
-    private final List<PlaceholderItem> mValues;
+    private final ArrayList<Universidad> mValues;
 
-    public MyUniversidadRecyclerViewAdapter(List<PlaceholderItem> items) {
+    public MyUniversidadRecyclerViewAdapter(ArrayList<Universidad> items) {
         mValues = items;
     }
 
@@ -33,20 +34,29 @@ public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUni
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        for (Universidad nombreUni: mValues){
+            Log.i("cositas2", nombreUni.nombre + " " + nombreUni.domain);
+        }
+
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).domain);
+        holder.mContentView.setText(mValues.get(position).nombre);
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        if (mValues == null){
+            return 0;
+        }else {
+            return mValues.size();
+        }
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mIdView;
         public final TextView mContentView;
-        public PlaceholderItem mItem;
+        public Universidad mItem;
 
         public ViewHolder(FragmentUniversidadBinding binding) {
             super(binding.getRoot());

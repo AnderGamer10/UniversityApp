@@ -31,10 +31,6 @@ import java.util.ArrayList;
  * A fragment representing a list of Items.
  */
 public class UniversidadFragment extends Fragment {
-    String strPais = "", strNombreUni = "";
-    ArrayList<Universidad> datosUniversidades;
-
-
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
@@ -59,17 +55,6 @@ public class UniversidadFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            strNombreUni = getArguments().getString("DataNombreUni");
-            strPais = getArguments().getString("DataPais");
-
-            datosUniversidades = new ArrayList<>();
-            LeerApi();
-        }catch (Exception e){
-            e.getMessage();
-        }
-
-
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -89,46 +74,8 @@ public class UniversidadFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyUniversidadRecyclerViewAdapter(datosUniversidades));
+            recyclerView.setAdapter(new MyUniversidadRecyclerViewAdapter(MainActivity.datosUniversidades));
         }
         return view;
     }
-
-
-
-//    TODO: Hacer la llamada de la API en el fragmento
-    private void LeerApi() {
-        String url = "http://universities.hipolabs.com/search?country=" + strPais + "&name=" + strNombreUni;
-
-        StringRequest postResquest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonObject = new JSONArray(response);
-                    for (int i = 0; i < jsonObject.length();i++){
-                        JSONObject j = jsonObject.getJSONObject(i);
-                        datosUniversidades.add(new Universidad(j.getString("name"), j.getString("domains").substring(2,j.getString("domains").length()-2)));
-                    }
-//                    TODO: Para pruebas de datos guardados  ------ Borrar en el futuro ------
-//                    for (Universidad nombreUni: datosUniversidades){
-//                        Log.i("cositas2", nombreUni.nombre + " " + nombreUni.domain);
-//                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Error", error.getMessage());
-            }
-        });
-        Volley.newRequestQueue(getContext()).add(postResquest);
-    }
-
-
-
-
-
 }

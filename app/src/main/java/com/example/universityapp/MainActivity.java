@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
     UniversidadFragment universidadFragment = new UniversidadFragment();
     Button btnMostrar;
     EditText idPais, idNombre;
-    String strPais = "", strNombre = "";
+    String strPais = "", strNombreUni = "";
     ScrollView idLista;
+    public static ArrayList<Universidad> datosUniversidades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +43,12 @@ public class MainActivity extends AppCompatActivity {
         idPais = findViewById(R.id.idPais);
 
         idLista = findViewById(R.id.idLista);
-        idLista.setVisibility(View.INVISIBLE);
-
         btnMostrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                strPais = String.valueOf(idPais.getText());
-                strNombre = String.valueOf(idNombre.getText());
 
-                Bundle bundle = new Bundle();
-                bundle.putString("DataNombreUni", strNombre);
-                bundle.putString("DataPais", strPais);
-                universidadFragment.setArguments(bundle);
+                datosUniversidades = new ArrayList<>();
+                LeerApi();
 
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -62,10 +57,41 @@ public class MainActivity extends AppCompatActivity {
 
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.fragmentContainerView2,universidadFragment)
+                        .add(R.id.fragmentoUniversidad,universidadFragment)
                         .commit();
-                idLista.setVisibility(View.VISIBLE);
             }
         });
+    }
+    //    TODO: Hacer la llamada de la API en el fragmento
+    private void LeerApi() {
+        strPais = String.valueOf(idPais.getText());
+        strNombreUni = String.valueOf(idNombre.getText());
+        String url = "http://universities.hipolabs.com/search?country=" + strPais + "&name=" + strNombreUni;
+
+        StringRequest postResquest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonObject = new JSONArray(response);
+                    for (int i = 0; i < jsonObject.length();i++){
+                        JSONObject j = jsonObject.getJSONObject(i);
+                        datosUniversidades.add(new Universidad(j.getString("name"), j.getString("domains").substring(2,j.getString("domains").length()-2)));
+                    }
+//                    TODO: Para pruebas de datos guardados  ------ Borrar en el futuro ------
+//                    for (Universidad nombreUni: datosUniversidades){
+//                        Log.i("cositas2", nombreUni.nombre + " " + nombreUni.domain);
+//                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error", error.getMessage());
+            }
+        });
+        Volley.newRequestQueue(this).add(postResquest);
     }
 }

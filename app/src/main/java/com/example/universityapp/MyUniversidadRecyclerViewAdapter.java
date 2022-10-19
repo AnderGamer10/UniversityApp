@@ -19,10 +19,10 @@ import java.util.List;
  */
 public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUniversidadRecyclerViewAdapter.ViewHolder> {
 
-    private final ArrayList<Universidad> mValues;
+    private final List<Universidad> mValues;
 
-    public MyUniversidadRecyclerViewAdapter(ArrayList<Universidad> items) {
-        mValues = items;
+    public MyUniversidadRecyclerViewAdapter(List<Universidad> items) {
+        this.mValues = items;
     }
 
     @Override
@@ -34,23 +34,18 @@ public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUni
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        for (Universidad nombreUni: mValues){
-            Log.i("cositas2", nombreUni.nombre + " " + nombreUni.domain);
-        }
 
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).domain);
-        holder.mContentView.setText(mValues.get(position).nombre);
+        holder.mIdView.setText(mValues.get(position).nombre);
+        holder.mContentView.setText("Ver");
     }
 
     @Override
     public int getItemCount() {
         if (mValues == null){
             return 0;
-        }else {
-            return mValues.size();
         }
-
+        return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,5 +63,7 @@ public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUni
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+
     }
 }
+

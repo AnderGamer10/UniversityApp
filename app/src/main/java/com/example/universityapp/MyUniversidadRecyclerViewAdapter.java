@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.universityapp.placeholder.PlaceholderContent.PlaceholderItem;
@@ -35,9 +36,9 @@ public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUni
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).nombre);
-        holder.mContentView.setText("Ver");
+        holder.itemUni = mValues.get(position);
+        holder.txtNombreUnis.setText(mValues.get(position).nombre);
+        holder.btnMostrarWeb.setText("Ver");
     }
 
     @Override
@@ -49,19 +50,19 @@ public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUni
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public Universidad mItem;
+        public final TextView txtNombreUnis;
+        public final Button btnMostrarWeb;
+        public Universidad itemUni;
 
         public ViewHolder(FragmentUniversidadBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            txtNombreUnis = binding.nombreUniversidad;
+            btnMostrarWeb = binding.btnVer;
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + btnMostrarWeb.getText() + "'";
         }
 
     }

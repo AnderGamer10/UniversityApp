@@ -2,6 +2,7 @@ package com.example.universityapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,12 +28,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    UniversidadFragment universidadFragment = new UniversidadFragment();
     Button btnMostrar;
     EditText idPais, idNombre;
     String strPais = "", strNombreUni = "";
-    ScrollView idLista;
-    public static ArrayList<Universidad> datosUniversidades;
+    public static ArrayList<Universidad> datosUniversidades = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,27 +41,14 @@ public class MainActivity extends AppCompatActivity {
         idNombre = findViewById(R.id.idNombre);
         idPais = findViewById(R.id.idPais);
 
-        idLista = findViewById(R.id.idLista);
         btnMostrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                datosUniversidades = new ArrayList<>();
                 LeerApi();
-
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .detach(universidadFragment)
-                        .commit();
-
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.fragmentoUniversidad,universidadFragment)
-                        .commit();
             }
         });
     }
-    //    TODO: Hacer la llamada de la API en el fragmento
+//    TODO: Llamada a la API al clicar en mostrar
     private void LeerApi() {
         strPais = String.valueOf(idPais.getText());
         strNombreUni = String.valueOf(idNombre.getText());
@@ -77,11 +63,8 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject j = jsonObject.getJSONObject(i);
                         datosUniversidades.add(new Universidad(j.getString("name"), j.getString("domains").substring(2,j.getString("domains").length()-2)));
                     }
-//                    TODO: Para pruebas de datos guardados  ------ Borrar en el futuro ------
-//                    for (Universidad nombreUni: datosUniversidades){
-//                        Log.i("cositas2", nombreUni.nombre + " " + nombreUni.domain);
-//                    }
-
+                    Intent newActivity = new Intent(MainActivity.this, FragmentActivity.class);
+                    MainActivity.this.startActivity(newActivity);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

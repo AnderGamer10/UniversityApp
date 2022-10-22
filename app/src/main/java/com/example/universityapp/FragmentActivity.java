@@ -17,20 +17,8 @@ public class FragmentActivity extends AppCompatActivity {
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newActivity = new Intent(FragmentActivity.this, MainActivity.class);
-                FragmentActivity.this.startActivity(newActivity);
+                finish();
             }
         });
     }
 }
-
-//                        TODO: Para eliminar y crear el fragmento
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .detach(universidadFragment)
-//                        .commit();
-//
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .add(R.id.fragmentoUniversidad,universidadFragment)
-//                        .commit();

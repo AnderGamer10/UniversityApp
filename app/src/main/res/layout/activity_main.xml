@@ -18,6 +18,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.314" />
 
+    <Button
+        android:id="@+id/btnGuardarPreferencias"
+        android:layout_width="231dp"
+        android:layout_height="54dp"
+        android:text="Guardar preferencias"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.408"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/btnBorrarPreferencias"
+        android:layout_width="231dp"
+        android:layout_height="54dp"
+        android:text="Borrar preferencias"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
+        tools:ignore="TouchTargetSizeCheck" />
+
     <TextView
         android:id="@+id/infoPais"
         android:layout_width="wrap_content"

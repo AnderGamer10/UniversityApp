@@ -2,7 +2,9 @@ package com.example.universityapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnMostrar;
+    Button btnMostrar, btnGuardarPreferencias, btnBorrarPreferencias;
     EditText idPais, idNombre;
     String strPais = "", strNombreUni = "";
     public static ArrayList<Universidad> datosUniversidades = new ArrayList<>();
@@ -40,11 +42,28 @@ public class MainActivity extends AppCompatActivity {
         btnMostrar = findViewById(R.id.btnMostrar);
         idNombre = findViewById(R.id.idNombre);
         idPais = findViewById(R.id.idPais);
+        btnGuardarPreferencias = findViewById(R.id.btnGuardarPreferencias);
+        btnBorrarPreferencias = findViewById(R.id.btnBorrarPreferencias);
+
+        cargarPreferencias();
 
         btnMostrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LeerApi();
+            }
+        });
+
+        btnGuardarPreferencias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                guardarPreferencias();
+            }
+        });
+        btnBorrarPreferencias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                borrarPreferencias();
             }
         });
     }
@@ -77,4 +96,36 @@ public class MainActivity extends AppCompatActivity {
         });
         Volley.newRequestQueue(this).add(postResquest);
     }
+    private void guardarPreferencias() {
+        SharedPreferences preferences = getSharedPreferences("paisYnombre", Context.MODE_PRIVATE);
+        String pais = idPais.getText().toString();
+        String nombreUni = idNombre.getText().toString();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("pais",pais);
+        editor.putString("nombreUni",nombreUni);
+        idNombre.setText(nombreUni);
+        idPais.setText(pais);
+
+        editor.commit();
+    }
+
+    private void cargarPreferencias(){
+        SharedPreferences preferences = getSharedPreferences("paisYnombre", Context.MODE_PRIVATE);
+        String pais = preferences.getString("pais", "");
+        String nombreUni = preferences.getString("nombreUni", "");
+
+        idNombre.setText(nombreUni);
+        idPais.setText(pais);
+    }
+
+    private void borrarPreferencias(){
+        SharedPreferences preferences = getSharedPreferences("paisYnombre", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("pais","");
+        editor.putString("nombreUni","");
+        idNombre.setText("");
+        idPais.setText("");
+        editor.commit();
+    }
+
 }

@@ -2,9 +2,13 @@ package com.example.universityapp;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,9 +29,11 @@ public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUni
     public MyUniversidadRecyclerViewAdapter(List<Universidad> items) {
         this.mValues = items;
     }
-
+    Context context;
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        context = parent.getContext();
 
         return new ViewHolder(FragmentUniversidadBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
@@ -35,17 +41,22 @@ public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUni
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
+        int thisUni = position;
         holder.itemUni = mValues.get(position);
         holder.txtNombreUnis.setText(mValues.get(position).nombre);
         holder.btnMostrarWeb.setText("Ver");
+        holder.btnMostrarWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newIntent = new Intent(context, WebViewActivity.class);
+                newIntent.putExtra("url-web", mValues.get(thisUni).domain);
+                context.startActivity(newIntent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        if (mValues == null){
-            return 0;
-        }
         return mValues.size();
     }
 
@@ -64,6 +75,7 @@ public class MyUniversidadRecyclerViewAdapter extends RecyclerView.Adapter<MyUni
         public String toString() {
             return super.toString() + " '" + btnMostrarWeb.getText() + "'";
         }
+
 
     }
 }
